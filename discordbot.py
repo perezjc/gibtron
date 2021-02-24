@@ -14,22 +14,19 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
-@bot.event
-async def on_message(message):
-    if message.author == bot.user:
-        return
-
-    brooklyn_99_quotes = [
-        'I\'m the human form of the 💯 emoji.',
-        'Bingpot!',
-        (
-            'Cool. Cool cool cool cool cool cool cool, '
-            'no doubt no doubt no doubt no doubt.'
-        ),
+@bot.command(name='8ball', help='Tells you your fortune, you might not like the answer')
+async def magic_eightball(ctx):
+    fortunes = [
+        'no',
+        'yes',
+        'future unclear',
+        'no way dude',
+        'unlikely',
+        'please try again',
+        '100% without a doubt',
     ]
-
-    if message.content == '99!':
-        response = random.choice(brooklyn_99_quotes)
-        await message.channel.send(response)
-
+    
+    response = random.choice(fortunes)
+    await ctx.send(response)
+    
 bot.run(TOKEN)
