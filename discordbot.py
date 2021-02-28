@@ -42,5 +42,16 @@ async def on_raw_reaction_add(payload):
   
         if emojiuser == messageuser:
             await message.remove_reaction(emoji, member)
+    
+    if payload.emoji.name == "👍":
+        channel = bot.get_channel(payload.channel_id)
+        message = await channel.fetch_message(payload.message_id)
+        emoji = (payload.emoji)
+        emojiuser = (payload.user_id)
+        messageuser = (message.author.id)
+        member = (payload.member)
+  
+        if emojiuser == messageuser:
+            await message.remove_reaction(emoji, member)
 
 bot.run(TOKEN)
