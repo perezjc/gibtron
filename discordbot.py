@@ -30,28 +30,39 @@ async def magic_eightball(ctx):
     response = random.choice(fortunes)
     await ctx.send(response)
 
+class autobot(discord.Client):
+
+    def self_emoji_remove(self, payload, message):
+        #List of emojis you wanna insta remove on self react :)        
+        selfemojilist = ['upvote', '👍']
+        for x in selfemojilist:
+            if payload.emoji.name == x:
+                emojiuser = (payload.user_id)
+                messageuser = (message.author.id)
+  
+                if emojiuser == messageuser:
+                    return True
+
+    def Lazar(self, payload, message):
+        LazarEmoji = ["MonkaLasarEyes"]
+        for x in LazarEmoji:
+            if payload.emoji.name == x:
+                reaction = (message.reactions)
+        
+                for r in reaction:
+                    if r.emoji.name == 'MonkaLasarEyes' and r.count > 4:
+                        return True
+                    
+
+autobot = autobot()
+
 @bot.event
 async def on_raw_reaction_add(payload):
-    if payload.emoji.name == "upvote":
-        channel = bot.get_channel(payload.channel_id)
-        message = await channel.fetch_message(payload.message_id)
-        emoji = (payload.emoji)
-        emojiuser = (payload.user_id)
-        messageuser = (message.author.id)
-        member = (payload.member)
-  
-        if emojiuser == messageuser:
-            await message.remove_reaction(emoji, member)
-    
-    if payload.emoji.name == "👍":
-        channel = bot.get_channel(payload.channel_id)
-        message = await channel.fetch_message(payload.message_id)
-        emoji = (payload.emoji)
-        emojiuser = (payload.user_id)
-        messageuser = (message.author.id)
-        member = (payload.member)
-  
-        if emojiuser == messageuser:
-            await message.remove_reaction(emoji, member)
+    channel = bot.get_channel(payload.channel_id)
+    message = await channel.fetch_message(payload.message_id)
+    if autobot.self_emoji_remove(payload, message):
+        await message.remove_reaction(payload.emoji, payload.member)
+    if autobot.Lazar(payload, message):
+        await message.delete()
 
 bot.run(TOKEN)
