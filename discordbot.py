@@ -63,8 +63,8 @@ async def magic_eightball(ctx):
     await ctx.send(response)
 
 @bot.command(name= 'roll', help = 'Roll, like in WoW')
-async def roll(ctx, number):
-    roll_range = list(range(int(number)))
+async def roll(ctx):
+    roll_range = list(range(100))
     response = random.choice(roll_range)
     await ctx.send(response)
 
